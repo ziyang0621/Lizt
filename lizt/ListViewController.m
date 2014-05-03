@@ -23,6 +23,7 @@
 @interface ListViewController () {
  
 UIRefreshControl *refreshControl;
+    
 }
 
 @property NSDateFormatter *formatter;
