@@ -1,0 +1,2 @@
+PODS_ICLOUDDOCUMENTSYNC_FRAMEWORK_SEARCH_PATHS = "$(PODS_ROOT)/iCloudDocumentSync"
+PODS_ICLOUDDOCUMENTSYNC_OTHER_LDFLAGS = -framework Foundation -framework UIKit -framework iCloud

@@ -1,0 +1,34 @@
+PODS:
+  - CRToast (0.0.6)
+  - DejalActivityView (1.2)
+  - EDColor (0.4.0)
+  - MYBlurIntroductionView (1.0.3)
+  - SparkInspector (1.2.2)
+  - SWTableViewCell (0.2.8)
+  - TPKeyboardAvoiding (1.2.3)
+
+DEPENDENCIES:
+  - CRToast
+  - DejalActivityView
+  - EDColor
+  - MYBlurIntroductionView (from `git@github.com:MatthewYork/MYBlurIntroductionView.git`)
+  - SparkInspector
+  - SWTableViewCell (from `https://github.com/CEWendel/SWTableViewCell.git`)
+  - TPKeyboardAvoiding
+
+EXTERNAL SOURCES:
+  MYBlurIntroductionView:
+    :git: git@github.com:MatthewYork/MYBlurIntroductionView.git
+  SWTableViewCell:
+    :git: https://github.com/CEWendel/SWTableViewCell.git
+
+SPEC CHECKSUMS:
+  CRToast: 7def6720179d7c861b06222a82a4ad4bdfe476f0
+  DejalActivityView: 3a7f7a2be287c0f25f547762815c40709b02169c
+  EDColor: 2bb778b45320c6fc268f0f4c71d9379abf71a36d
+  MYBlurIntroductionView: 0ed5699c570ceb1cdfc86dc6cf7dae869950d677
+  SparkInspector: 4bd040e553e958cabeb898301d2947f2be93144b
+  SWTableViewCell: 1d1d60efc352f98c00d14e38878164a30d1fbb6d
+  TPKeyboardAvoiding: 17995aaa6db26ac2a9fa8714a86509c5888f0392
+
+COCOAPODS: 0.32.1
