@@ -312,7 +312,7 @@ UIRefreshControl *refreshControl;
                         TrackData *item = (TrackData*)[NSKeyedUnarchiver unarchiveObjectWithData:documentData];
                         
                         //If the iCloud data is newer, save the iCloud data to local
-                        if ([item.lastModifiedDate compare: _trackDataDoc.data.lastModifiedDate ] == NSOrderedDescending) {
+                        if (!_trackDataDoc.data.lastModifiedDate || [item.lastModifiedDate compare: _trackDataDoc.data.lastModifiedDate ] == NSOrderedDescending) {
                             _trackDataDoc.data = item;
                             [_trackDataDoc saveData];
                         }
@@ -436,7 +436,7 @@ UIRefreshControl *refreshControl;
                         TrackData *item = (TrackData*)[NSKeyedUnarchiver unarchiveObjectWithData:documentData];
                         
                         //If the iCloud data is newer, save the iCloud data to local
-                        if ([item.lastModifiedDate compare: _trackDataDoc.data.lastModifiedDate ] == NSOrderedDescending) {
+                        if (!_trackDataDoc.data.lastModifiedDate || [item.lastModifiedDate compare: _trackDataDoc.data.lastModifiedDate ] == NSOrderedDescending) {
                             _trackDataDoc.data = item;
                             [_trackDataDoc saveData];
                         }
