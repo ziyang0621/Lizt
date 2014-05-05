@@ -13,12 +13,11 @@
 #import "DejalActivityView.h"
 #import "ListDoc.h"
 #import "ListDB.h"
+#import "TrackData.h"
+#import "TrackDB.h"
 #import "AppConfig.h"
 #import "NSDate+HumanizedTime.h"
 #import "CRToast.h"
-#import "GAI.h"
-#import "GAIDictionaryBuilder.h"
-#import "GAIFields.h"
 
 @interface ListViewController () {
  
@@ -29,9 +28,7 @@ UIRefreshControl *refreshControl;
 @property NSDateFormatter *formatter;
 @property NSMutableArray *fileNameList;
 @property BOOL viewIsLoaded;
-@property BOOL isUpdating;
 @property BOOL isRetrieving;
-@property int updateCounter;
 @property BOOL wasUnavailable;
 @property BOOL toastCompleted;
 @property BOOL toastIsFirstShown;
@@ -74,6 +71,19 @@ UIRefreshControl *refreshControl;
     _toastIsFirstShown = YES;
     
     _localList = [ListDB loadDocs];
+    NSMutableArray *trackDataArr = [TrackDB loadDocs];
+    if (trackDataArr.count) {
+        _trackDataDoc = [trackDataArr objectAtIndex:0];
+    }
+    else {
+        _trackDataDoc = [[TrackDoc alloc] init];
+        _trackDataDoc.data = [[TrackData alloc] init];
+    }
+    if (!_trackDataDoc.data.completeChart) {
+        _trackDataDoc.data.completeChart = [NSMutableDictionary new];
+    }
+    
+    NSLog(@"the track data %@", _trackDataDoc.data.completeChart);
     
     [_formatter setDateFormat:@"MM/dd/yyyy' 'hh:mm a"];
     
@@ -223,27 +233,12 @@ UIRefreshControl *refreshControl;
 
 -(void)iCloudFileUpdateDidEnd {
     NSLog(@"update did end");
-}
-
-
-- (void)iCloudFilesDidChange:(NSMutableArray *)files withNewFileNames:(NSMutableArray *)fileNames {
-    // Get the query results
-    NSLog(@"Files did change: %@", fileNames);
-    
-    _fileNameList = fileNames; // A list of the file names
     
     if (_fileNameList.count == 0) {
         [self.tableView reloadData];
         [refreshControl endRefreshing];
     }
     
-    if (_isUpdating) {
-        _updateCounter ++;
-        if (_updateCounter >= 2) {
-            _updateCounter = 0;
-            _isUpdating = NO;
-        }
-    }
     else  {
         if (!_isRetrieving && !_viewIsLoaded) {
             NSLog(@"start refreshing......");
@@ -254,6 +249,21 @@ UIRefreshControl *refreshControl;
                 [self retrieveData];
             }
         }
+    }
+}
+
+
+- (void)iCloudFilesDidChange:(NSMutableArray *)files withNewFileNames:(NSMutableArray *)fileNames {
+    // Get the query results
+    NSLog(@"Files did change: %@", fileNames);
+    
+    _fileNameList = fileNames; // A list of the file names
+    
+}
+
+-(void)deleteAllListDoc {
+    for (ListDoc *doc in _localList) {
+        [doc deleteDoc];
     }
 }
 
@@ -298,20 +308,36 @@ UIRefreshControl *refreshControl;
             [[iCloud sharedCloud] retrieveCloudDocumentWithName:fileName completion:^(UIDocument *cloudDocument, NSData *documentData, NSError *error) {
                 if (!error) {
                     
-                    ListTask *item = (ListTask*)[NSKeyedUnarchiver unarchiveObjectWithData:documentData];
-                    
-                    if ([self containFile:fileName]) {
-                        int index = [self indexOfDoc:fileName];
-                        if ([item.lastModifiedDate compare: ((ListDoc*)[_localList objectAtIndex:index]).data.lastModifiedDate ] == NSOrderedDescending) {
-                            ((ListDoc*)[_localList objectAtIndex:index]).data = item;
-                            [((ListDoc*)[_localList objectAtIndex:index]) saveData];
+                    if ([fileName isEqualToString:@"TrackData.txt"]) {
+                        TrackData *item = (TrackData*)[NSKeyedUnarchiver unarchiveObjectWithData:documentData];
+                        
+                        //If the iCloud data is newer, save the iCloud data to local
+                        if ([item.lastModifiedDate compare: _trackDataDoc.data.lastModifiedDate ] == NSOrderedDescending) {
+                            _trackDataDoc.data = item;
+                            [_trackDataDoc saveData];
+                        }
+                        //If the iCloud data is older, save the local data to iCloud
+                        else {
+                            [self saveTrackData:_trackDataDoc.data];
                         }
                     }
+                    
                     else {
-                        ListDoc *doc = [[ListDoc alloc] init];
-                        doc.data = item;
-                        [doc saveData];
-                        [_localList addObject:doc];
+                        ListTask *item = (ListTask*)[NSKeyedUnarchiver unarchiveObjectWithData:documentData];
+                        
+                        if ([self containFile:fileName]) {
+                            int index = [self indexOfDoc:fileName];
+                            if ([item.lastModifiedDate compare: ((ListDoc*)[_localList objectAtIndex:index]).data.lastModifiedDate ] == NSOrderedDescending) {
+                                ((ListDoc*)[_localList objectAtIndex:index]).data = item;
+                                [((ListDoc*)[_localList objectAtIndex:index]) saveData];
+                            }
+                        }
+                        else {
+                            ListDoc *doc = [[ListDoc alloc] init];
+                            doc.data = item;
+                            [doc saveData];
+                            [_localList addObject:doc];
+                        }
                     }
                     
                     [cloudDocument closeWithCompletionHandler:^(BOOL success) {
@@ -381,18 +407,15 @@ UIRefreshControl *refreshControl;
     }
 }
 
--(void)deleteAllDoc {
-    for (ListDoc *doc in _localList) {
-        [doc deleteDoc];
-    }
-}
 
 -(void)retrieveData {
     _isRetrieving = YES;
     __block int i = 0;
     
-    [self deleteAllDoc];
+    //delete all local list data, to retrieve iCloud data
+    [self deleteAllListDoc];
     _localList = [NSMutableArray array];
+    
     NSArray *tempList = [NSMutableArray arrayWithArray:_fileNameList];
     if (!tempList.count) {
         [self sortLocalList];
@@ -409,12 +432,28 @@ UIRefreshControl *refreshControl;
             [[iCloud sharedCloud] retrieveCloudDocumentWithName:fileName completion:^(UIDocument *cloudDocument, NSData *documentData, NSError *error) {
                 if (!error) {
                     
-                    ListTask *item = (ListTask*)[NSKeyedUnarchiver unarchiveObjectWithData:documentData];
-                    
-                    ListDoc *doc = [[ListDoc alloc] init];
-                    doc.data = item;
-                    [doc saveData];
-                    [_localList addObject:doc];
+                    if ([fileName isEqualToString:@"TrackData.txt"]) {
+                        TrackData *item = (TrackData*)[NSKeyedUnarchiver unarchiveObjectWithData:documentData];
+                        
+                        //If the iCloud data is newer, save the iCloud data to local
+                        if ([item.lastModifiedDate compare: _trackDataDoc.data.lastModifiedDate ] == NSOrderedDescending) {
+                            _trackDataDoc.data = item;
+                            [_trackDataDoc saveData];
+                        }
+                        //If the iCloud data is older, save the local data to iCloud
+                        else {
+                            [self saveTrackData:_trackDataDoc.data];
+                        }
+
+                    }
+                    else {
+                        ListTask *item = (ListTask*)[NSKeyedUnarchiver unarchiveObjectWithData:documentData];
+                        
+                        ListDoc *doc = [[ListDoc alloc] init];
+                        doc.data = item;
+                        [doc saveData];
+                        [_localList addObject:doc];
+                    }
                     
                     [cloudDocument closeWithCompletionHandler:^(BOOL success) {
                         if (success) {
@@ -464,6 +503,7 @@ UIRefreshControl *refreshControl;
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     if (_localList.count) {
         _noTaskLabel.hidden = YES;
+        [self checkTmrNotifications];
     }
     else {
         _noTaskLabel.hidden = NO;
@@ -597,7 +637,6 @@ UIRefreshControl *refreshControl;
         
         [_formatter setDateFormat:@"hh:mm a"];
         
-
         
         NSCalendarUnit units = NSEraCalendarUnit| NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit;
 
@@ -689,6 +728,83 @@ UIRefreshControl *refreshControl;
     return cell;
 }
 
+-(void)cancelTmrAlarms {
+    NSString *name;
+    UIApplication* app = [UIApplication sharedApplication];
+    NSMutableArray *Arr=[[NSMutableArray alloc] initWithArray:[[UIApplication sharedApplication]scheduledLocalNotifications]];
+    for (int k=0;k<[Arr count];k++) {
+        UILocalNotification *not=[Arr objectAtIndex:k];
+        name = [not.userInfo valueForKey:@"fileName"];
+        if ([name isEqualToString:@"tmrAlarm"]) {
+            [app cancelLocalNotification:not];
+            NSLog(@"cancelled tmr alarm:%@", name);
+        }
+    }
+}
+
+-(void)checkTmrNotifications {
+    [self cancelTmrAlarms];
+    
+    NSMutableDictionary *dict = [NSMutableDictionary new];
+    [_formatter setDateFormat:@"MM/dd/yyyy"];
+    for (ListDoc *doc in _localList) {
+        if (!doc.data.isCompleted && [doc.data.taskDueTime compare:[NSDate new]] == NSOrderedDescending) {
+            NSString *stringDate = [_formatter stringFromDate:[doc.data.taskDueTime dateByAddingTimeInterval:-60*60*24]];
+            NSDate *keyDate = [_formatter dateFromString:stringDate];
+            keyDate = [NSDate getDateWithHour:21 fromDate:keyDate];
+            NSNumber *counter = [dict objectForKey:keyDate];
+            if (counter) {
+                int value = [counter intValue];
+                NSNumber *newCounter = [NSNumber numberWithInt:value +1];
+                [dict setObject:newCounter forKey:keyDate];
+            }
+            else {
+                [dict setObject:[NSNumber numberWithInt:1] forKey:keyDate];
+            }
+        }
+    }
+    NSLog(@"total tmr noti %d", [[dict allKeys] count]);
+    [_formatter setDateFormat:@"MM/dd/yyyy' 'hh:mm a"];
+
+    for (NSDate *date in [dict allKeys]) {
+        NSLog(@"tmr notfi %@, %d", [_formatter stringFromDate:date], [[dict objectForKey:date] intValue]);
+        if ([date compare:[NSDate new]] == NSOrderedDescending) {
+            [self setUpTmrAlarmWithDate:date andCounter:[[dict objectForKey:date] intValue]];
+        }
+    }
+}
+
+-(void)setUpTmrAlarmWithDate:(NSDate *)keyDate andCounter:(int)counter{
+    NSDate *alertTime = keyDate;
+    UIApplication* app = [UIApplication sharedApplication];
+    UILocalNotification* notifyAlarm = [[UILocalNotification alloc]
+                                        init];
+    
+    if (notifyAlarm) {
+        notifyAlarm.fireDate = alertTime;
+        notifyAlarm.timeZone = [NSTimeZone defaultTimeZone];
+        notifyAlarm.repeatInterval = 0;
+        
+        [_formatter setDateFormat:@"MM/dd/yyyy' 'hh:mm a"];
+        NSString *alarmTask;
+        if (counter > 1) {
+           alarmTask = [NSString stringWithFormat:@"You have %d active tasks due tomorrow", counter];
+        }
+        else {
+            alarmTask = [NSString stringWithFormat:@"You have %d active task due tomorrow", counter];
+        }
+        notifyAlarm.alertBody = alarmTask;
+        notifyAlarm.alertAction =@"view";
+        notifyAlarm.soundName = UILocalNotificationDefaultSoundName;
+        NSDictionary *customInfo =[NSDictionary dictionaryWithObject:@"tmrAlarm" forKey:@"fileName"];
+        notifyAlarm.userInfo = customInfo;
+        notifyAlarm.applicationIconBadgeNumber = 1;
+        
+        [app scheduleLocalNotification:notifyAlarm];
+    }
+}
+
+
 -(int)numberOfTasksInThePast {
     int counter = 0;
     
@@ -711,7 +827,7 @@ UIRefreshControl *refreshControl;
         }
     }
 
-    NSLog(@"number of task in the past: %d", counter);
+   // NSLog(@"number of task in the past: %d", counter);
     return counter;
 }
 
@@ -733,10 +849,9 @@ UIRefreshControl *refreshControl;
         }
     }
     
-    NSLog(@"number of task today: %d", counter);
+   // NSLog(@"number of task today: %d", counter);
     return counter;
 }
-
 
 
 -(int)numberOfTasksTomorrow {
@@ -761,7 +876,7 @@ UIRefreshControl *refreshControl;
         }
     }
     
-    NSLog(@"number of task tomorrow: %d", counter);
+   // NSLog(@"number of task tomorrow: %d", counter);
     return counter;
 }
 
@@ -787,7 +902,7 @@ UIRefreshControl *refreshControl;
         }
     }
     
-    NSLog(@"number of task upcoming: %d", counter);
+    //NSLog(@"number of task upcoming: %d", counter);
     return counter;
 }
 
@@ -881,20 +996,6 @@ UIRefreshControl *refreshControl;
     [self saveListItem:task];
 }
 
-//-(void)controller:(AddTaskViewController *)controller didSaveItemWithName:(NSString *)name andDueTime:(NSDate *)dueTime andNotes:(NSData *)notes {
-//    
-//    [[NSNotificationCenter defaultCenter] postNotificationName:@"startUpdateActivity" object:nil];
-//    
-//    NSString *newFileName = [self generateFileNameWithExtension:@"txt"];
-//    
-//    ListTask *task = [[ListTask alloc] init];
-//    task.taskName = [name copy];
-//    task.taskDueTime = dueTime;
-//    task.taskNotes = notes;
-//    task.fileName = [newFileName copy];
-//    
-//    [self saveListItem:task];
-//}
 
 #pragma mark - EditTaskViewControllerDelegate
 -(void)controller:(EditTaskViewController *)controller didUpdateItemWithName:(NSString *)name andDueTime:(NSDate *)dueTime andRemindTimeOn:(BOOL)remindTimeIsOn andRemindTime:(NSDate *)remindTime andNotes:(NSData *)notes andOriginalTask:(ListTask *)task{
@@ -923,31 +1024,6 @@ UIRefreshControl *refreshControl;
 }
 
 
-//-(void)controller:(EditTaskViewController *)controller didUpdateItemWithName:(NSString *)name andDueTime:(NSDate *)dueTime andNotes:(NSData *)notes andOriginalTask:(ListTask *)task
-//{
-//    if (![name isEqualToString:task.taskName] || ![dueTime isEqualToDate:task.taskDueTime] || ![notes isEqualToData:task.taskNotes]) {
-//        
-//        NSString *fileName = [task.fileName copy];
-//        
-//        for (int i = 0; i < _localList.count; i++) {
-//            if ([((ListDoc *)[_localList objectAtIndex:i]).data.fileName isEqualToString:fileName]) {
-//                [((ListDoc*)[_localList objectAtIndex:i]) deleteDoc];
-//                [_localList removeObjectAtIndex:i];
-//                break;
-//            }
-//        }
-//        
-//        ListTask *newTask = [[ListTask alloc] init];
-//        newTask.taskName = [name copy];
-//        newTask.taskDueTime = dueTime;
-//        newTask.taskNotes = notes;
-//        newTask.fileName = [fileName copy];
-//        
-//        [self saveListItem:newTask];
-//    }
-//}
-
-
 -(void)saveListItem:(ListTask *)task{
     NSData *fileData = [NSKeyedArchiver archivedDataWithRootObject:task];
     
@@ -956,8 +1032,6 @@ UIRefreshControl *refreshControl;
             if (!error) {
                 NSLog(@"iCloud Document, %@ saved successfully", cloudDocument.fileURL.lastPathComponent);
                 
-                _isUpdating = YES;
-                _updateCounter = 0;
                 
                 task.lastModifiedDate = [NSDate new];
                 ListDoc *doc = [[ListDoc alloc] init];
@@ -967,6 +1041,7 @@ UIRefreshControl *refreshControl;
                 
                 [self sortLocalList];
                 [_tableView reloadData];
+                
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"endActivity" object:nil];
             }
             else {
@@ -1141,6 +1216,20 @@ UIRefreshControl *refreshControl;
     return preRows;
 }
 
+
+-(void)saveTrackData:(TrackData*) trackData{
+    NSData *fileData = [NSKeyedArchiver archivedDataWithRootObject:trackData];
+    
+    [[iCloud sharedCloud] saveAndCloseDocumentWithName:@"TrackData.txt" withContent:fileData completion:^(UIDocument *cloudDocument, NSData *documentData, NSError *error) {
+        if (!error) {
+            NSLog(@"iCloud Document, %@ saved track data successfully", cloudDocument.fileURL.lastPathComponent);
+        }
+        else {
+            NSLog(@"iCloud Document save track data error: %@", error);
+        }
+    }];
+}
+
 #pragma mark - SWTableViewDelegate
 - (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerLeftUtilityButtonWithIndex:(NSInteger)index {
    [[NSNotificationCenter defaultCenter] postNotificationName:@"startUpdateActivity" object:nil];
@@ -1154,6 +1243,30 @@ UIRefreshControl *refreshControl;
             NSLog(@"Complete/Undo button was pressed, trying to complete/undo row %d", cellIndexPath.row + preRows);
             
             ListDoc *doc = [_localList objectAtIndex:cellIndexPath.row + preRows];
+            
+            NSString *completeStatus = @"YES";
+            
+            //Task is overdue
+            if ([doc.data.taskDueTime compare:[NSDate new]] == NSOrderedAscending || [doc.data.taskDueTime compare:[NSDate new]] == NSOrderedSame) {
+                completeStatus = @"NO";
+            }
+            
+            if (doc.data.isCompleted) {
+                if ([_trackDataDoc.data.completeChart objectForKey:doc.data.fileName.copy]) {
+                    [_trackDataDoc.data.completeChart removeObjectForKey:doc.data.fileName.copy];
+                }
+            }
+            else {
+                [_trackDataDoc.data.completeChart setObject:completeStatus forKey:doc.data.fileName.copy];
+            }
+            _trackDataDoc.data.lastModifiedDate = [NSDate new];
+            [_trackDataDoc saveData];
+            
+            if (_iCloudIsAvailable) {
+                [self saveTrackData:_trackDataDoc.data];
+            }
+            NSLog(@"track data in complete button %@", _trackDataDoc.data.completeChart);
+            
 
             doc.data.isCompleted = !doc.data.isCompleted;
             
@@ -1182,16 +1295,26 @@ UIRefreshControl *refreshControl;
                                                                   action:@"button_press"
                                                                    label:@"iPhone_delete_task_pressed"
                                                                    value:nil] build]];
-
             
+            ListDoc *doc = (ListDoc*)[_localList objectAtIndex:cellIndexPath.row + preRows];
+            
+            if (!doc.data.isCompleted) {
+                [_trackDataDoc.data.completeChart setObject:@"DELETE" forKey:doc.data.fileName.copy];
+                
+                _trackDataDoc.data.lastModifiedDate = [NSDate new];
+                [_trackDataDoc saveData];
+                
+                if (_iCloudIsAvailable) {
+                    [self saveTrackData:_trackDataDoc.data];
+                }
+                NSLog(@"track data in delete button %@", _trackDataDoc.data.completeChart);
+
+            }
+         
             if (_iCloudIsAvailable) {
-                ListDoc *doc = [_localList objectAtIndex:cellIndexPath.row + preRows];
 
                 [[iCloud sharedCloud] deleteDocumentWithName:doc.data.fileName completion:^(NSError *error) {
                     if (!error) {
-                        
-                        _isUpdating = YES;
-                        _updateCounter = 0;
                         
                         [self cancelScheduleAlarm:doc.data.fileName];
                         [doc deleteDoc];
@@ -1208,8 +1331,6 @@ UIRefreshControl *refreshControl;
                 }];
             }
             else {
-             
-                ListDoc *doc = (ListDoc*)[_localList objectAtIndex:cellIndexPath.row + preRows];
                 
                 [self cancelScheduleAlarm:doc.data.fileName];
                 

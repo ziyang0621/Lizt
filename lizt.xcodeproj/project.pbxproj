@@ -18,6 +18,15 @@
 		855B835218ED13B40020DE2D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 855B834C18ED13B30020DE2D /* Localizable.strings */; };
 		855B835318ED13B40020DE2D /* Localizable_full.strings in Resources */ = {isa = PBXBuildFile; fileRef = 855B834E18ED13B40020DE2D /* Localizable_full.strings */; };
 		855B835418ED13B40020DE2D /* NSDate+HumanizedTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 855B835118ED13B40020DE2D /* NSDate+HumanizedTime.m */; };
+		855C00FB1915E077002E9194 /* TrackData.m in Sources */ = {isa = PBXBuildFile; fileRef = 855C00FA1915E077002E9194 /* TrackData.m */; };
+		855C00FE1915E12A002E9194 /* TrackDoc.m in Sources */ = {isa = PBXBuildFile; fileRef = 855C00FD1915E12A002E9194 /* TrackDoc.m */; };
+		855C01011915E1D6002E9194 /* TrackDB.m in Sources */ = {isa = PBXBuildFile; fileRef = 855C01001915E1D6002E9194 /* TrackDB.m */; };
+		855C01041916F564002E9194 /* TrackDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 855C01031916F564002E9194 /* TrackDataViewController.m */; };
+		855C0109191749CF002E9194 /* main_view.png in Resources */ = {isa = PBXBuildFile; fileRef = 855C0108191749CF002E9194 /* main_view.png */; };
+		855C010B19174A2C002E9194 /* edit_task.png in Resources */ = {isa = PBXBuildFile; fileRef = 855C010A19174A2C002E9194 /* edit_task.png */; };
+		855C010D19174AC4002E9194 /* sync1.png in Resources */ = {isa = PBXBuildFile; fileRef = 855C010C19174AC4002E9194 /* sync1.png */; };
+		855C010F19174B1C002E9194 /* sync2.png in Resources */ = {isa = PBXBuildFile; fileRef = 855C010E19174B1C002E9194 /* sync2.png */; };
+		855C011119174B85002E9194 /* track_data.png in Resources */ = {isa = PBXBuildFile; fileRef = 855C011019174B85002E9194 /* track_data.png */; };
 		8564C3E818CD68F400DB438A /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8564C3E718CD68F400DB438A /* Security.framework */; };
 		8564C3EA18CD690900DB438A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8564C3E918CD690900DB438A /* SystemConfiguration.framework */; };
 		856D14B519136A260029912F /* iCloud.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 856D14B419136A260029912F /* iCloud.framework */; };
@@ -46,9 +55,6 @@
 		85C05C4E18D1778800B42BB6 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85C05C4D18D1778800B42BB6 /* Crashlytics.framework */; };
 		85C2E75718BA90010003E3D8 /* ExtendNSLogFunctionality.m in Sources */ = {isa = PBXBuildFile; fileRef = 85C2E75618BA90010003E3D8 /* ExtendNSLogFunctionality.m */; };
 		85C2E75A18BA91B30003E3D8 /* AddTaskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 85C2E75918BA91B30003E3D8 /* AddTaskViewController.m */; };
-		85C88AD81900ADCF000F5273 /* main_view.png in Resources */ = {isa = PBXBuildFile; fileRef = 85C88AD51900ADCF000F5273 /* main_view.png */; };
-		85C88AD91900ADCF000F5273 /* sync1.png in Resources */ = {isa = PBXBuildFile; fileRef = 85C88AD61900ADCF000F5273 /* sync1.png */; };
-		85C88ADA1900ADCF000F5273 /* sync2.png in Resources */ = {isa = PBXBuildFile; fileRef = 85C88AD71900ADCF000F5273 /* sync2.png */; };
 		85E0966B18CD39350080C750 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85E0966A18CD39350080C750 /* Social.framework */; };
 		85E0966F18CD4AF60080C750 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85E0966E18CD4AF60080C750 /* AudioToolbox.framework */; };
 		85E0967118CD4C690080C750 /* noti.caf in Resources */ = {isa = PBXBuildFile; fileRef = 85E0967018CD4C690080C750 /* noti.caf */; };
@@ -58,7 +64,6 @@
 		85EE996B18CEC170001DC91A /* IntroOneViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85EE996918CEC170001DC91A /* IntroOneViewController.xib */; };
 		85EE99BE18CEDE7E001DC91A /* IntroTwoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 85EE99BC18CEDE7E001DC91A /* IntroTwoViewController.m */; };
 		85EE99BF18CEDE7E001DC91A /* IntroTwoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85EE99BD18CEDE7E001DC91A /* IntroTwoViewController.xib */; };
-		85EE99C318CEE259001DC91A /* edit_task.png in Resources */ = {isa = PBXBuildFile; fileRef = 85EE99C218CEE259001DC91A /* edit_task.png */; };
 		85EE99C718CEE8B0001DC91A /* IntroThreeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 85EE99C518CEE8B0001DC91A /* IntroThreeViewController.m */; };
 		85EE99C818CEE8B0001DC91A /* IntroThreeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85EE99C618CEE8B0001DC91A /* IntroThreeViewController.xib */; };
 		85EE99CE18CEEF6E001DC91A /* iCloud.png in Resources */ = {isa = PBXBuildFile; fileRef = 85EE99CD18CEEF6E001DC91A /* iCloud.png */; };
@@ -98,6 +103,19 @@
 		855B834F18ED13B40020DE2D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable_full.strings; sourceTree = "<group>"; };
 		855B835018ED13B40020DE2D /* NSDate+HumanizedTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+HumanizedTime.h"; sourceTree = "<group>"; };
 		855B835118ED13B40020DE2D /* NSDate+HumanizedTime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+HumanizedTime.m"; sourceTree = "<group>"; };
+		855C00F91915E077002E9194 /* TrackData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackData.h; sourceTree = "<group>"; };
+		855C00FA1915E077002E9194 /* TrackData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrackData.m; sourceTree = "<group>"; };
+		855C00FC1915E12A002E9194 /* TrackDoc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackDoc.h; sourceTree = "<group>"; };
+		855C00FD1915E12A002E9194 /* TrackDoc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrackDoc.m; sourceTree = "<group>"; };
+		855C00FF1915E1D6002E9194 /* TrackDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackDB.h; sourceTree = "<group>"; };
+		855C01001915E1D6002E9194 /* TrackDB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrackDB.m; sourceTree = "<group>"; };
+		855C01021916F564002E9194 /* TrackDataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackDataViewController.h; sourceTree = "<group>"; };
+		855C01031916F564002E9194 /* TrackDataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrackDataViewController.m; sourceTree = "<group>"; };
+		855C0108191749CF002E9194 /* main_view.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = main_view.png; sourceTree = "<group>"; };
+		855C010A19174A2C002E9194 /* edit_task.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = edit_task.png; sourceTree = "<group>"; };
+		855C010C19174AC4002E9194 /* sync1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sync1.png; sourceTree = "<group>"; };
+		855C010E19174B1C002E9194 /* sync2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sync2.png; sourceTree = "<group>"; };
+		855C011019174B85002E9194 /* track_data.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = track_data.png; sourceTree = "<group>"; };
 		8564C3E718CD68F400DB438A /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		8564C3E918CD690900DB438A /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		856D14B419136A260029912F /* iCloud.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = iCloud.framework; sourceTree = "<group>"; };
@@ -140,9 +158,6 @@
 		85C2E75618BA90010003E3D8 /* ExtendNSLogFunctionality.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExtendNSLogFunctionality.m; sourceTree = "<group>"; };
 		85C2E75818BA91B30003E3D8 /* AddTaskViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddTaskViewController.h; sourceTree = "<group>"; };
 		85C2E75918BA91B30003E3D8 /* AddTaskViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddTaskViewController.m; sourceTree = "<group>"; };
-		85C88AD51900ADCF000F5273 /* main_view.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = main_view.png; sourceTree = "<group>"; };
-		85C88AD61900ADCF000F5273 /* sync1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sync1.png; sourceTree = "<group>"; };
-		85C88AD71900ADCF000F5273 /* sync2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sync2.png; sourceTree = "<group>"; };
 		85E0966A18CD39350080C750 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		85E0966E18CD4AF60080C750 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		85E0967018CD4C690080C750 /* noti.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = noti.caf; sourceTree = "<group>"; };
@@ -155,7 +170,6 @@
 		85EE99BB18CEDE7E001DC91A /* IntroTwoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntroTwoViewController.h; sourceTree = "<group>"; };
 		85EE99BC18CEDE7E001DC91A /* IntroTwoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntroTwoViewController.m; sourceTree = "<group>"; };
 		85EE99BD18CEDE7E001DC91A /* IntroTwoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IntroTwoViewController.xib; sourceTree = "<group>"; };
-		85EE99C218CEE259001DC91A /* edit_task.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = edit_task.png; sourceTree = "<group>"; };
 		85EE99C418CEE8B0001DC91A /* IntroThreeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntroThreeViewController.h; sourceTree = "<group>"; };
 		85EE99C518CEE8B0001DC91A /* IntroThreeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntroThreeViewController.m; sourceTree = "<group>"; };
 		85EE99C618CEE8B0001DC91A /* IntroThreeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IntroThreeViewController.xib; sourceTree = "<group>"; };
@@ -234,6 +248,25 @@
 			path = SEHumanizedTime;
 			sourceTree = "<group>";
 		};
+		855C010519172F3F002E9194 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				855C00F91915E077002E9194 /* TrackData.h */,
+				855C00FA1915E077002E9194 /* TrackData.m */,
+				855C00FC1915E12A002E9194 /* TrackDoc.h */,
+				855C00FD1915E12A002E9194 /* TrackDoc.m */,
+				855C00FF1915E1D6002E9194 /* TrackDB.h */,
+				855C01001915E1D6002E9194 /* TrackDB.m */,
+				852A5F0F18C2947600E3019F /* ListTask.h */,
+				852A5F1018C2947600E3019F /* ListTask.m */,
+				8522FEDC18DA9B4B00F9E49B /* ListDoc.h */,
+				8522FEDD18DA9B4B00F9E49B /* ListDoc.m */,
+				8522FED918DA98C000F9E49B /* ListDB.h */,
+				8522FEDA18DA98C000F9E49B /* ListDB.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 		85928CB718B9591D00D6EF36 = {
 			isa = PBXGroup;
 			children = (
@@ -282,12 +315,15 @@
 				8547963718D0058300E72D8D /* Utilities */,
 				85EE996618CEC148001DC91A /* Custom Panels */,
 				859BB58818C2F0D400554437 /* lizt.entitlements */,
+				855C010519172F3F002E9194 /* Models */,
 				852A5F1218C2964500E3019F /* AppConfig.h */,
 				85928CD218B9591D00D6EF36 /* AppDelegate.h */,
 				85928CD318B9591D00D6EF36 /* AppDelegate.m */,
 				85928CF218B95D2200D6EF36 /* MainStoryboard.storyboard */,
 				859BB58118C2DFEF00554437 /* SettingsViewController.h */,
 				859BB58218C2DFEF00554437 /* SettingsViewController.m */,
+				855C01021916F564002E9194 /* TrackDataViewController.h */,
+				855C01031916F564002E9194 /* TrackDataViewController.m */,
 				85928CF418B95E0800D6EF36 /* HostViewController.h */,
 				85928CF518B95E0800D6EF36 /* HostViewController.m */,
 				85928CF718B95F9E00D6EF36 /* ListViewController.h */,
@@ -301,12 +337,6 @@
 				8587B01218CAE392005AA736 /* EditTaskViewController.m */,
 				855691ED18BAF63F00A285EE /* ListCell.h */,
 				855691EE18BAF63F00A285EE /* ListCell.m */,
-				852A5F0F18C2947600E3019F /* ListTask.h */,
-				852A5F1018C2947600E3019F /* ListTask.m */,
-				8522FEDC18DA9B4B00F9E49B /* ListDoc.h */,
-				8522FEDD18DA9B4B00F9E49B /* ListDoc.m */,
-				8522FED918DA98C000F9E49B /* ListDB.h */,
-				8522FEDA18DA98C000F9E49B /* ListDB.m */,
 				85928CE218B9591D00D6EF36 /* liztTests */,
 				85928CD518B9591D00D6EF36 /* Images.xcassets */,
 				85928CCA18B9591D00D6EF36 /* Supporting Files */,
@@ -317,15 +347,16 @@
 		85928CCA18B9591D00D6EF36 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				85C88AD51900ADCF000F5273 /* main_view.png */,
-				85C88AD61900ADCF000F5273 /* sync1.png */,
-				85C88AD71900ADCF000F5273 /* sync2.png */,
+				855C011019174B85002E9194 /* track_data.png */,
+				855C010E19174B1C002E9194 /* sync2.png */,
+				855C010C19174AC4002E9194 /* sync1.png */,
+				855C010A19174A2C002E9194 /* edit_task.png */,
+				855C0108191749CF002E9194 /* main_view.png */,
 				85A7AD5018F77F6B00213500 /* ICViewPager */,
 				85FD869018F1517800A262AF /* Google Analytics */,
 				855B834B18ED13B30020DE2D /* SEHumanizedTime */,
 				85EE99CF18CEFA8B001DC91A /* noti.png */,
 				85EE99CD18CEEF6E001DC91A /* iCloud.png */,
-				85EE99C218CEE259001DC91A /* edit_task.png */,
 				85E0967018CD4C690080C750 /* noti.caf */,
 				859BB58418C2E7C500554437 /* MHPrettyDate */,
 				85928CCB18B9591D00D6EF36 /* lizt-Info.plist */,
@@ -495,23 +526,24 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				85C88AD91900ADCF000F5273 /* sync1.png in Resources */,
-				85C88ADA1900ADCF000F5273 /* sync2.png in Resources */,
+				855C010D19174AC4002E9194 /* sync1.png in Resources */,
 				855B835218ED13B40020DE2D /* Localizable.strings in Resources */,
 				85E57DB1190F683B00E7735C /* LiztDatePickerView.xib in Resources */,
 				855B835318ED13B40020DE2D /* Localizable_full.strings in Resources */,
 				85928CF318B95D2200D6EF36 /* MainStoryboard.storyboard in Resources */,
+				855C011119174B85002E9194 /* track_data.png in Resources */,
 				85EE99D518CEFAA3001DC91A /* IntroFourViewController.xib in Resources */,
 				85EE996B18CEC170001DC91A /* IntroOneViewController.xib in Resources */,
 				85928CCE18B9591D00D6EF36 /* InfoPlist.strings in Resources */,
 				85EE99C818CEE8B0001DC91A /* IntroThreeViewController.xib in Resources */,
 				85E0967118CD4C690080C750 /* noti.caf in Resources */,
 				85EE99BF18CEDE7E001DC91A /* IntroTwoViewController.xib in Resources */,
+				855C010B19174A2C002E9194 /* edit_task.png in Resources */,
 				85928CD618B9591D00D6EF36 /* Images.xcassets in Resources */,
-				85EE99C318CEE259001DC91A /* edit_task.png in Resources */,
+				855C0109191749CF002E9194 /* main_view.png in Resources */,
+				855C010F19174B1C002E9194 /* sync2.png in Resources */,
 				85EE99D018CEFA8B001DC91A /* noti.png in Resources */,
 				85EE99CE18CEEF6E001DC91A /* iCloud.png in Resources */,
-				85C88AD81900ADCF000F5273 /* main_view.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -576,6 +608,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				855C01041916F564002E9194 /* TrackDataViewController.m in Sources */,
+				855C00FE1915E12A002E9194 /* TrackDoc.m in Sources */,
 				859BB58718C2E7C500554437 /* MHPrettyDate.m in Sources */,
 				852A5F1118C2947600E3019F /* ListTask.m in Sources */,
 				85EE99C718CEE8B0001DC91A /* IntroThreeViewController.m in Sources */,
@@ -584,11 +618,13 @@
 				855B835418ED13B40020DE2D /* NSDate+HumanizedTime.m in Sources */,
 				8522FEDB18DA98C000F9E49B /* ListDB.m in Sources */,
 				855691EF18BAF63F00A285EE /* ListCell.m in Sources */,
+				855C01011915E1D6002E9194 /* TrackDB.m in Sources */,
 				85EE996A18CEC170001DC91A /* IntroOneViewController.m in Sources */,
 				859BB58318C2DFEF00554437 /* SettingsViewController.m in Sources */,
 				85C2E75A18BA91B30003E3D8 /* AddTaskViewController.m in Sources */,
 				850829E91912B8230013BF3E /* NSDate+Extras.m in Sources */,
 				850829EC1912D6D20013BF3E /* UIImage+Extras.m in Sources */,
+				855C00FB1915E077002E9194 /* TrackData.m in Sources */,
 				85928CF618B95E0800D6EF36 /* HostViewController.m in Sources */,
 				85EE99BE18CEDE7E001DC91A /* IntroTwoViewController.m in Sources */,
 				8587B01318CAE392005AA736 /* EditTaskViewController.m in Sources */,

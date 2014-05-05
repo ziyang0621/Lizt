@@ -8,9 +8,6 @@
 
 #import "AppDelegate.h"
 #import "AppConfig.h"
-#import "GAI.h"
-#import "GAIDictionaryBuilder.h"
-#import "GAIFields.h"
 
 @implementation AppDelegate
 
@@ -40,12 +37,6 @@
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notif {
 	// Handle the notificaton when the app is running
-    
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"MM/dd/yyyy' 'hh:mm a"];
-
-    NSLog(@"did receive notif fireDate %@",[formatter stringFromDate:notif.fireDate]);
-    // reset the badge
     
     UIApplicationState state = [application applicationState];
     if (state == UIApplicationStateActive) {

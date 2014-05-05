@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 ziyang. All rights reserved.
 //
 
-#define APP_VERSION_NUMBER @"1.1.2"
+#define APP_VERSION_NUMBER @"1.2"
 
 #define APP_STORE_ID @"https://itunes.apple.com/us/app/lizt/id839340231"
 

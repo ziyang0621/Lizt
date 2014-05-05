@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-@class TPKeyboardAvoidingScrollView;
 
 @interface SettingsViewController : UIViewController <UIActionSheetDelegate>
 

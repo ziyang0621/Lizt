@@ -34,7 +34,7 @@
 #define COCOAPODS_POD_AVAILABLE_SWTableViewCell
 #define COCOAPODS_VERSION_MAJOR_SWTableViewCell 0
 #define COCOAPODS_VERSION_MINOR_SWTableViewCell 2
-#define COCOAPODS_VERSION_PATCH_SWTableViewCell 8
+#define COCOAPODS_VERSION_PATCH_SWTableViewCell 9
 
 // SparkInspector
 #define COCOAPODS_POD_AVAILABLE_SparkInspector
@@ -47,4 +47,10 @@
 #define COCOAPODS_VERSION_MAJOR_TPKeyboardAvoiding 1
 #define COCOAPODS_VERSION_MINOR_TPKeyboardAvoiding 2
 #define COCOAPODS_VERSION_PATCH_TPKeyboardAvoiding 3
+
+// XYPieChart
+#define COCOAPODS_POD_AVAILABLE_XYPieChart
+#define COCOAPODS_VERSION_MAJOR_XYPieChart 0
+#define COCOAPODS_VERSION_MINOR_XYPieChart 2
+#define COCOAPODS_VERSION_PATCH_XYPieChart 0
 

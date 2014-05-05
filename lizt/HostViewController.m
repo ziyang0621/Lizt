@@ -8,6 +8,7 @@
 
 #import "HostViewController.h"
 #import "ListViewController.h"
+#import "TrackDataViewController.h"
 #import "SettingsViewController.h"
 #import "DejalActivityView.h"
 #import "AppDelegate.h"
@@ -15,15 +16,15 @@
 #import "IntroTwoViewController.h"
 #import "IntroThreeViewController.h"
 #import "IntroFourViewController.h"
-#import "GAI.h"
-#import "GAIDictionaryBuilder.h"
-#import "GAIFields.h"
+
 
 @interface HostViewController () <ViewPagerDataSource, ViewPagerDelegate>
 
 @property (nonatomic) NSUInteger numberOfTabs;
 
 @property (nonatomic) ListViewController *listVC;
+
+@property (nonatomic) TrackDataViewController *trackDataVC;
 
 @property (nonatomic) SettingsViewController *settingsVC;
 
@@ -205,7 +206,7 @@
 }
 
 - (void)loadContent {
-    self.numberOfTabs = 2;
+    self.numberOfTabs = 3;
 }
 
 #pragma mark - ViewPagerDataSource
@@ -222,6 +223,9 @@
         label.text = @"My List";
     }
     else if (index == 1) {
+        label.text = @"Track Data";
+    }
+    else if (index == 2) {
         label.text = @"App Info";
     }
     label.textAlignment = NSTextAlignmentCenter;
@@ -247,11 +251,18 @@
         
         return _listVC;
     }
+    else if (index == 1) {
+        if (_trackDataVC == nil) {
+            _trackDataVC = [self.storyboard instantiateViewControllerWithIdentifier:@"TrackDataViewController"];
+        }
+        _trackDataVC.trackData = _listVC.trackDataDoc.data;
+        return _trackDataVC;
+        
+    }
     else  {
         if (_settingsVC == nil) {
             _settingsVC = [self.storyboard instantiateViewControllerWithIdentifier:@"SettingsViewController"];
         }
-        
         return _settingsVC;
     }
 }
@@ -271,7 +282,7 @@
         case ViewPagerOptionTabOffset:
             return 10.0;
         case ViewPagerOptionTabWidth:
-            return UIInterfaceOrientationIsLandscape(self.interfaceOrientation) ? 128.0 : 140.0;
+            return UIInterfaceOrientationIsLandscape(self.interfaceOrientation) ? 128.0 : 100.0;
         case ViewPagerOptionFixFormerTabsPositions:
             return 1.0;
         case ViewPagerOptionFixLatterTabsPositions:

@@ -10,6 +10,7 @@
 #import "AddTaskViewController.h"
 #import "EditTaskViewController.h"
 #import "SWTableViewCell.h"
+#import "TrackDoc.h"
 #import <iCloud/iCloud.h>
 
 @interface ListViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, AddTaskViewControllerDelegate, SWTableViewCellDelegate, iCloudDelegate, EditTaskViewControllerDelegate>
@@ -19,6 +20,7 @@
 @property (strong, nonatomic) UIAlertView *myAlertView;
 @property (nonatomic)BOOL needToConfigiCloud;
 @property (nonatomic) NSMutableArray *localList;
+@property (nonatomic) TrackDoc *trackDataDoc;
 @property (nonatomic)BOOL iCloudIsAvailable;
 @property (nonatomic)BOOL justLaunch;
 @property (nonatomic)BOOL isFirstInstallOrUpdate;

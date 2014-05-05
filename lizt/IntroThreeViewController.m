@@ -7,9 +7,6 @@
 //
 
 #import "IntroThreeViewController.h"
-#import "GAI.h"
-#import "GAIDictionaryBuilder.h"
-#import "GAIFields.h"
 
 @interface IntroThreeViewController ()
 

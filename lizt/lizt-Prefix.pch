@@ -17,5 +17,8 @@
     #import "NSDate+Extras.h"
     #import "UIImage+Extras.h"
     #import "EDColor.h"
+    #import "GAI.h"
+    #import "GAIDictionaryBuilder.h"
+    #import "GAIFields.h"
 #endif
 

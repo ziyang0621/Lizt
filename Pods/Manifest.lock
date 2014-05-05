@@ -4,8 +4,9 @@ PODS:
   - EDColor (0.4.0)
   - MYBlurIntroductionView (1.0.3)
   - SparkInspector (1.2.2)
-  - SWTableViewCell (0.2.8)
+  - SWTableViewCell (0.2.9)
   - TPKeyboardAvoiding (1.2.3)
+  - XYPieChart (0.2)
 
 DEPENDENCIES:
   - CRToast
@@ -15,6 +16,7 @@ DEPENDENCIES:
   - SparkInspector
   - SWTableViewCell (from `https://github.com/CEWendel/SWTableViewCell.git`)
   - TPKeyboardAvoiding
+  - XYPieChart
 
 EXTERNAL SOURCES:
   MYBlurIntroductionView:
@@ -28,7 +30,8 @@ SPEC CHECKSUMS:
   EDColor: 2bb778b45320c6fc268f0f4c71d9379abf71a36d
   MYBlurIntroductionView: 0ed5699c570ceb1cdfc86dc6cf7dae869950d677
   SparkInspector: 4bd040e553e958cabeb898301d2947f2be93144b
-  SWTableViewCell: 1d1d60efc352f98c00d14e38878164a30d1fbb6d
+  SWTableViewCell: 66179cabbc0dccbace474ca92d98683cc7cf08b4
   TPKeyboardAvoiding: 17995aaa6db26ac2a9fa8714a86509c5888f0392
+  XYPieChart: 17fa4ce063f09cf60716ff6974cfb5930bdc6afd
 
 COCOAPODS: 0.32.1

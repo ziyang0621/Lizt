@@ -9,9 +9,6 @@
 @import Social;
 #import "SettingsViewController.h"
 #import "AppConfig.h"
-#import "GAI.h"
-#import "GAIDictionaryBuilder.h"
-#import "GAIFields.h"
 
 @interface SettingsViewController ()
 
